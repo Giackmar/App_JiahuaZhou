@@ -121,7 +121,9 @@ public class VisualizzazioneProvincia extends AppCompatActivity {
                 provinciaAttuale = provincia;
             }
         }
-        lastUpdate = "Dati aggiornati:   "+provinciaAttuale.getString("updated_at");
+        String updated_at = provinciaAttuale.getString("updated_at");
+        updated_at = updated_at.replace("T", " ").replace(".000000Z", "");//ci sono caratteri "inquinanti"
+        lastUpdate = "Dati aggiornati:   "+updated_at;
         nome = provinciaAttuale.getString("name");
         popolazione = provinciaAttuale.getInt("population");
         area = provinciaAttuale.getInt("area");

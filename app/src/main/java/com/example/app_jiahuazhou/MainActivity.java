@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Provincia> province;
     String lastUpdate;
     TextView textView_lastUpdate;
+    TextView textView_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,11 @@ public class MainActivity extends AppCompatActivity {
         lastUpdate = "";
 
         listView = findViewById(R.id.listView);
+        textView_title = findViewById(R.id.textView_title);
         textView_lastUpdate = findViewById(R.id.textView_lastUpdate);
         province = new ArrayList<>();
+
+        textView_title.setText("Provincie canadesi");
 
         try {
             loadData();
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //imposto ciò che deve fare il programma una volta che viene cliccato un elemento della listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         downloadInternet.execute(myUrl);
     }
 
+    //scarico i dati
     private class DownloadInternet extends AsyncTask<URL, String, String> {
 
         final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
@@ -113,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
             adapter = new ArrayAdapter<Provincia>(getApplicationContext(), R.layout.row, R.id.provincia, province) {
                 @NonNull
                 @Override
@@ -127,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //"carico l'arrayList province con i dati scaricati da internet
     public void parsingJson(String json) throws JSONException {
         JSONObject datiJson = new JSONObject(json);
         JSONArray provinceJson =  datiJson.getJSONArray("data");
